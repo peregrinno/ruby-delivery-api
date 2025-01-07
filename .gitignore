@@ -30,4 +30,5 @@ manifest.yml
 .Spotlight-V100
 .Trashes
 
-.yml
+*.yml
+*.env
