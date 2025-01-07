@@ -1,0 +1,6 @@
+development:
+  clients:
+    default:
+      uri: mongodb+srv://api_user:Y32on1pbhmqFvQ35@peregrinnosbackend0.190lf.mongodb.net/delivery_api?retryWrites=true&w=majority&appName=peregrinnosbackend0
+      options:
+        server_selection_timeout: 5

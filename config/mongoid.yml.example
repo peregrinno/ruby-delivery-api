@@ -1,0 +1,6 @@
+development:
+  clients:
+    default:
+      uri: "sua-string-de-conexao"
+      options:
+        server_selection_timeout: 5
