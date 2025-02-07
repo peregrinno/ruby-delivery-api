@@ -1,84 +1,115 @@
-Os métodos implementados para a API foram organizados em controladores e cobrem as principais operações para o sistema de delivery. Aqui está um resumo das rotas e métodos:
+# Peregrinno's Delivery API
 
----
+API REST para sistema de delivery desenvolvida com Ruby e Sinatra, usando MongoDB Atlas.
 
-### **Autenticação**
+## Tecnologias
 
-1. **Login** (`POST /login`)
-   - Autentica o cliente usando **email** e **senha**.
-   - Retorna um token JWT válido por 1 hora se as credenciais forem corretas.
+- Ruby 3.3.0
+- Sinatra
+- MongoDB Atlas
+- JWT
+- Swagger/OpenAPI
+- BCrypt
 
----
+## Instalação
 
-### **Clientes**
+1. Instale as dependências:
+   bash
+   bundle install
 
-1. **Criar Cliente** (`POST /customers`)
-   - Cria um novo cliente com os campos: `name`, `phone`, `email` e `password`.
+2. Configure o ambiente:
 
----
+```bash
+cp .env.example .env
+```
 
-### **Produtos**
+3. Execute o servidor:
 
-1. **Listar Produtos** (`GET /products`)
+```bash
+# Produção
+ruby app.rb
 
-   - Retorna todos os produtos cadastrados.
-2. **Criar Produto** (`POST /products`)
+# Desenvolvimento
+bundle exec rerun 'ruby app.rb'
+```
 
-   - Cria um novo produto com os campos: `name` e `price`.
+## Documentação
 
----
+Acesse: `http://localhost:4567/api-docs`
 
-### **Ordens**
+## Rotas
 
-1. **Criar Ordem** (`POST /orders`)
+### Autenticação
 
-   - Cria uma nova ordem para um cliente com:
-     - `customer_id`
-     - `total` (valor total da ordem calculado no frontend ou no backend)
-     - `order_date` (data automática gerada pelo sistema).
-2. **Listar ordens** (`GET /orders`)
+- `POST /first-user` - Cria primeiro admin
+- `POST /auth/login` - Login admin
+- `POST /auth/customer/login` - Login cliente
 
-   - Listar ordens
+### Cliente
 
----
+- `POST /customer/register` - Registro
+- `GET /customer/orders` - Lista pedidos
+- `POST /customer/orders` - Cria pedido
 
-### **Atualização da Ordem**
+### Admin
 
-1. **Atualiza status da ordemCriar Detalhe da Ordem** (`PUT /orders/{id}/status`)
-   - Atualize uma ordem com:
-     - `id` (referência à ordem a ser atualizada).
-     - `status` (status a ser definido na ordem).
+- `GET /admin/users` - Lista usuários
+- `POST /admin/users` - Cria usuário
+- `PUT /admin/users/:id` - Atualiza usuário
+- `DELETE /admin/users/:id` - Remove usuário
+- `GET /admin/products` - Lista produtos
+- `POST /admin/products` - Cria produto
+- `PUT /admin/products/:id` - Atualiza produto
+- `DELETE /admin/products/:id` - Remove produto
+- `GET /admin/orders` - Lista pedidos
+- `PUT /admin/orders/:id/status` - Atualiza status
 
----
+### Público
 
-### **Resumo dos Métodos HTTP**
+- `GET /products` - Lista produtos
 
-| Método | Endpoint                | Função                                    |
-| ------- | ----------------------- | ------------------------------------------- |
-| POST    | `/login`              | Autentica o cliente e retorna um token JWT. |
-| POST    | `/customers`          | Cria um novo cliente.                       |
-| GET     | `/products`           | Retorna a lista de todos os produtos.       |
-| POST    | `/products`           | Cria um novo produto.                       |
-| POST    | `/orders`             | Cria uma nova ordem para um cliente.        |
-| GET     | `/orders`             | Listar ordens                               |
-| PUT     | `/orders/{id}/status` | Atualiza status da ordem                    |
+## Status dos Pedidos
 
----
+- Em analise
+- Em preparo
+- Pronto
+- Enviado
+- Entregue
+- Cancelado
 
-Essa estrutura cobre as operações principais. Você pode expandir adicionando funcionalidades, como edição ou exclusão de recursos (usando os métodos **PUT** e **DELETE**) ou listagem filtrada, conforme necessário.
+## Autenticação
 
-# Excução da API
+Inclua o token JWT no header:
 
-### **Pré-requisitos**
+```bash
+Authorization: Bearer seu_token_aqui
+```
 
-- Instale as dependências do projeto:
-  `bundle install`
+## Variáveis de Ambiente (.env)
 
-### **Ubuntu**
+```
+MONGODB_URI=mongodb+srv://...
+MONGODB_TEST_URI=mongodb+srv://...
+MONGODB_PROD_URI=mongodb+srv://...
+JWT_SECRET=sua_chave_jwt
+SESSION_SECRET=sua_chave_session
+API_NAME=Delivery API
+CORS_URL=http://localhost:3000
+```
 
-- Na raiz do projeto, execute (preferencialmente com sudo):
+## Estrutura
 
-  `ruby app.rb `
-- Em desenvolvimento:
-
-  `rerun app.rb`
+```
+delivery-api/
+├── src/
+│   ├── config/      # Configurações
+│   ├── controllers/ # Controladores
+│   ├── lib/         # Bibliotecas
+│   ├── middlewares/ # Middlewares
+│   ├── models/      # Modelos
+│   └── routes/      # Rotas
+├── views/           # Views
+├── .env.example     # Template
+├── app.rb          # Principal
+└── swagger.yml     # Docs
+```
