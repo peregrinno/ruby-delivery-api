@@ -1,0 +1,26 @@
+development:
+  clients:
+    default:
+      uri: <%= ENV['MONGODB_URI'] %>
+      options:
+        server_selection_timeout: 5
+        retry_writes: true
+        w: majority
+
+test:
+  clients:
+    default:
+      uri: <%= ENV['MONGODB_TEST_URI'] %>
+      options:
+        server_selection_timeout: 5
+        retry_writes: true
+        w: majority
+
+production:
+  clients:
+    default:
+      uri: <%= ENV['MONGODB_PROD_URI'] %>
+      options:
+        server_selection_timeout: 5
+        retry_writes: true
+        w: majority
